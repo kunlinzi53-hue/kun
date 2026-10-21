@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and local overrides
+.env
+.env.local
+
+# Databases (regenerated from data/sales.csv on startup)
+*.db
+*.sqlite
+*.sqlite3
+data/sales.db*
+
+# Test / dev scratch space
+tests/_tmp/
+.scratch/
+# written and removed by backend.check_data --check-api
+.check_data.template.json
+
+# Editors / OS
+.vscode/
+.idea/
+# ...but keep the Live Preview setting the frontend team committed on purpose
+!frontend/.vscode/
+!frontend/.vscode/settings.json
+.DS_Store
+Thumbs.db
+*.log

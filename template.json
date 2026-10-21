@@ -1,0 +1,99 @@
+{
+  "_readme": [
+    "默认模板：校园用电量预测（对应 frontend/js/config.js 的 ENERGY CONSUMPTION FORECAST）。",
+    "这是后端唯一配置源：字段、下拉项、模型插件、输出文案全在这里。",
+    "其他模板：templates/food-demand.json（食堂需求）、templates/retail-sales.json（零售+ML）。",
+    "字段说明见 TEMPLATE.md，数据格式见 DATA_FORMAT.md。"
+  ],
+
+  "id": "energy-forecast",
+  "app": {
+    "brand": "CAMPUS ENERGY",
+    "title": "ENERGY CONSUMPTION FORECAST",
+    "subtitle": "AI-powered campus load prediction",
+    "footer": "group-baseline · 模板驱动 · DATA_FORMAT.md"
+  },
+
+  "dataset": {
+    "path": "data/energy_consumption.csv",
+    "date_column": "date",
+    "target": "kwh",
+    "unit": "kWh",
+    "target_label": "用电量"
+  },
+
+  "model": {
+    "plugin": "group-baseline",
+    "options": {
+      "effect_min_rows": 5,
+      "baseline_filter": {
+        "day_type": ["Weekday"]
+      },
+      "baseline_label": "a normal weekday",
+      "fallback_plugin": "group-baseline"
+    }
+  },
+
+  "fields": [
+    {
+      "name": "building",
+      "label": "Building",
+      "type": "select",
+      "source": "dataset",
+      "column": "building",
+      "required": true,
+      "default": "Teaching Block A",
+      "help": "哪栋楼"
+    },
+    {
+      "name": "day_type",
+      "label": "Day Type",
+      "type": "select",
+      "source": "dataset",
+      "column": "day_type",
+      "required": true,
+      "default": "Weekday",
+      "help": "工作日 / 周末"
+    },
+    {
+      "name": "weather",
+      "label": "Weather",
+      "type": "select",
+      "source": "dataset",
+      "column": "weather",
+      "required": true,
+      "default": "Sunny",
+      "help": "高温和低温都会推高空调/采暖负荷"
+    },
+    {
+      "name": "term_phase",
+      "label": "Term Phase",
+      "type": "select",
+      "source": "dataset",
+      "column": "term_phase",
+      "required": true,
+      "default": "Term",
+      "help": "考试周上升、假期骤降"
+    },
+    {
+      "name": "notes",
+      "label": "Additional Information",
+      "type": "text",
+      "source": "input",
+      "required": false,
+      "placeholder": "Extra context for your model...",
+      "help": "自由文本：会被原样发给外接模型，本地统计插件忽略它"
+    }
+  ],
+
+  "output": {
+    "locale": "en",
+    "headline": "Predicted daily consumption",
+    "subheadline": "基于历史条件的用电量预测",
+    "unit": "kWh",
+    "decimals": 0,
+    "delta_label": "vs. a normal weekday",
+    "explanation_title": "AI Explanation",
+    "submit_label": "Predict Consumption"
+  }
+}
